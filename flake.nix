@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = {
@@ -32,6 +32,8 @@
             };
           };
         };
+
+        formatter = pkgs.alejandra;
       }
     );
 }
