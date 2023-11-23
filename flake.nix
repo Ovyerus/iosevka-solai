@@ -52,7 +52,7 @@
           };
 
           all = pkgs.symlinkJoin {
-            name = "all";
+            name = "iosevka-solai-all";
             paths = with selfPkgs; [normal term];
           };
 
@@ -62,7 +62,7 @@
           tar-normal = mkTarball "iosevka-solai" selfPkgs.normal;
           tar-term = mkTarball "iosevka-solai-term" selfPkgs.term;
           tar = pkgs.symlinkJoin {
-            name = "tar";
+            name = "iosevka-solia-tarballs";
             paths = with selfPkgs; [tar-normal tar-term];
           };
         };
