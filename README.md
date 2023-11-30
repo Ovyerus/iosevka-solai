@@ -14,8 +14,15 @@ If you use Nix with either [NixOS](https://nixos.org) or
 [nix-darwin](https://github.com/LnL7/nix-darwin), this repository is available
 to use as a flake.
 
-(Font compilation will take a very long time depending on the amount of cores in
-your system. I'm looking into providing binary caches.)
+### Binary cache
+
+Building Iosevka from source can take a very long time depending on your
+machine's power (depends on threads & RAM), so I've setup a
+[Cachix](https://cachix.org) cache to provide binaries for this.
+
+```
+cachix use ovyerus
+```
 
 ### NixOS
 
@@ -49,7 +56,6 @@ your system. I'm looking into providing binary caches.)
     };
   };
 }
-
 ```
 
 ### nix-darwin
@@ -89,8 +95,9 @@ your system. I'm looking into providing binary caches.)
     };
   };
 }
-
 ```
+
+![Example of Iosevka Solai](example.png)
 
 ---
 
