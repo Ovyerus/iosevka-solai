@@ -21,4 +21,4 @@ jobs:
           authToken: ${{ secrets.CACHIX_API_KEY }}
 
       - run: nix build .#all -L
-      - run: nix bulid .#tar -L
+      - run: nix build .#tar -L
