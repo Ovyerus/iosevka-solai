@@ -1,0 +1,24 @@
+name: Build
+on: [push]
+
+jobs:
+  build:
+    # TODO: cross compile for ARM platforms.
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - uses: cachix/cachix-action@v13
+        with:
+          name: ovyerus
+          authToken: ${{ secrets.CACHIX_API_KEY }}
+
+      - run: nix build .#all -L
+      - run: nix bulid .#tar -L
