@@ -31,6 +31,21 @@
             mkdir -p $out/
             cp -av "$WORKDIR/${output}.tar.gz" $out/
           '';
+
+        fetchGitHubFont = {
+          name,
+          url,
+          hash,
+        }:
+          pkgs.stdenv.mkDerivation {
+            inherit name;
+            src = pkgs.fetchzip {inherit url hash;};
+            phases = ["installPhase" "patchPhase"];
+            installPhase = ''
+              mkdir -p $out/share
+              cp -r $src/fonts $out/share/
+            '';
+          };
       in {
         packages = {
           # Font with ligatures and normal spacing (some characters are double width).
@@ -64,6 +79,22 @@
           tar = pkgs.symlinkJoin {
             name = "iosevka-solia-tarballs";
             paths = with selfPkgs; [tar-normal tar-term];
+          };
+
+          # Pull from GitHub Releases, for those who don't want to build from scratch
+          bin-normal = fetchGitHubFont {
+            name = "iosevka-solai-normal-bin";
+            url = "https://github.com/Ovyerus/iosevka-solai/releases/download/v1.0.0/iosevka-solai.tar.gz";
+            hash = "sha256-Gto5YjSzMXT/aUweZK5WsLP3TKTdib/+V5Q5PN8A0+4=";
+          };
+          bin-term = fetchGitHubFont {
+            name = "iosevka-solai-term-bin";
+            url = "https://github.com/Ovyerus/iosevka-solai/releases/download/v1.0.0/iosevka-solai-term.tar.gz";
+            hash = "sha256-e5PU7pQXQaIJlEDhxfgWOKSZu1bCiBztcZ5Gbx/ibj4=";
+          };
+          bin = pkgs.symlinkJoin {
+            name = "iosevka-solai-bin";
+            paths = with selfPkgs; [bin-normal bin-term];
           };
         };
 

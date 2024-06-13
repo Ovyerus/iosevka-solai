@@ -14,15 +14,32 @@ If you use Nix with either [NixOS](https://nixos.org) or
 [nix-darwin](https://github.com/LnL7/nix-darwin), this repository is available
 to use as a flake.
 
-### Binary cache
+### Nix: Preventing building from source
 
-Building Iosevka from source can take a very long time depending on your
-machine's power (depends on threads & RAM), so I've setup a
-[Cachix](https://cachix.org) cache to provide binaries for this.
+Due to the nature of Iosevka's build process, being very resource intensive, you
+probably don't wish to build it from source. In that case, this flake provides a
+`bin` package which skips the build process and instead will fetch the pre-built
+font from the
+[latest GitHub release](https://github.com/Ovyerus/iosevka-solai/releases/latest)
+and extract it for you.
 
-```
-cachix use ovyerus
-```
+However, if you wish to avoid fetching data from a GitHub release for whatever
+but still do not wish to build it from source if possible, I have set up a
+[Cachix](https://cachix.org) cache to provide binaries for this. Simply install
+the Cachix CLI and then run `cachix use ovyerus`, and it _should_ pull the font
+files from there instead of running the build locally.
+
+If you decide to skip out on using the GitHub derivation, using Cachix or not,
+make sure to replace the `iosevka-solai.packages.${system}.bin` expressions in
+the following examples to instead use
+`iosevka-solai.packages.${system}.default`.
+
+> [!NOTE]  
+> Since this flake does not closely follow the latest upstream `nixpkgs`
+> version, if you wish to pull the font from Cachix you will need to make sure
+> that you **do not** set `inputs.iosevka-solai.nixpkgs.follows` to your nixpkgs
+> version, as then there is a chance that something will have changed and you
+> won't be able to fetch the font from the cache.
 
 ### NixOS
 
@@ -48,9 +65,9 @@ cachix use ovyerus
       modules = [
         ({...}: {
           # 23.05 and below
-          fonts.fonts = [iosevka-solai.packages.${system}.default];
+          fonts.fonts = [iosevka-solai.packages.${system}.bin];
           # 23.11 and above
-          fonts.packages = [iosevka-solai.packages.${system}.default];
+          fonts.packages = [iosevka-solai.packages.${system}.bin];
         })
       ];
     };
@@ -88,7 +105,7 @@ cachix use ovyerus
         ({...}: {
           fonts.fontDir.enable = true;
           fonts.fonts = [
-            iosevka.packages.${system}.default
+            iosevka.packages.${system}.bin
           ];
         })
       ];
