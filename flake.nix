@@ -84,13 +84,13 @@
           # Pull from GitHub Releases, for those who don't want to build from scratch
           bin-normal = fetchGitHubFont {
             name = "iosevka-solai-normal-bin";
-            url = "https://github.com/Ovyerus/iosevka-solai/releases/download/v1.0.0/iosevka-solai.tar.gz";
-            hash = "sha256-Gto5YjSzMXT/aUweZK5WsLP3TKTdib/+V5Q5PN8A0+4=";
+            url = "https://github.com/Ovyerus/iosevka-solai/releases/download/v1.1.0/iosevka-solai.tar.gz";
+            hash = "sha256-DvCKSAJvpRlidewalws/SoiuCrCOLf2Zc/qEQy0HZRo=";
           };
           bin-term = fetchGitHubFont {
             name = "iosevka-solai-term-bin";
-            url = "https://github.com/Ovyerus/iosevka-solai/releases/download/v1.0.0/iosevka-solai-term.tar.gz";
-            hash = "sha256-e5PU7pQXQaIJlEDhxfgWOKSZu1bCiBztcZ5Gbx/ibj4=";
+            url = "https://github.com/Ovyerus/iosevka-solai/releases/download/v1.1.0/iosevka-solai-term.tar.gz";
+            hash = "sha256-O8XrC2Kq9Z2nW+GAyZt3CplTzlK5otvBBTV53OJvZUM=";
           };
           bin = pkgs.symlinkJoin {
             name = "iosevka-solai-bin";
