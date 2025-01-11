@@ -20,5 +20,5 @@ jobs:
           name: ovyerus
           authToken: ${{ secrets.CACHIX_API_KEY }}
 
-      - run: nix build .#all -L
+      - run: nix build .#all -L --cores 4
       - run: nix build .#tar -L
